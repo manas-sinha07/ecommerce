@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Collections | California Watches Admin</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin"
+           class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-header">
+
+        <div>
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>Collections</h1>
+
+            <p>Manage watch collections.</p>
+
+        </div>
+
+        <a href="/admin/categories/add"
+           class="primary-button">
+            + Add Collection
+        </a>
+
+    </div>
+
+
+    <div class="admin-table-wrapper">
+
+        <table class="admin-table">
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="category : ${categories}">
+
+                <td th:text="${category.id}">
+                    1
+                </td>
+
+                <td>
+
+                    <strong th:text="${category.name}">
+                        Classic
+                    </strong>
+
+                </td>
+
+                <td>
+
+                    <div class="admin-actions">
+
+                        <a th:href="@{'/admin/categories/edit/' + ${category.id}}"
+                           class="edit-button">
+                            Edit
+                        </a>
+
+                        <a th:href="@{'/admin/categories/delete/' + ${category.id}}"
+                           class="delete-button"
+                           onclick="return confirm('Delete this collection?')">
+                            Delete
+                        </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+
+            <tr th:if="${#lists.isEmpty(categories)}">
+
+                <td colspan="3"
+                    class="empty-table">
+                    No collections found.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+</body>
+</html>

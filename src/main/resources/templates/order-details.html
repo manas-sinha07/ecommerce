@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed | California Watches</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo">
+            CALIFORNIA
+            <span>WATCHES</span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="/">Home</a>
+            <a href="/products">Watches</a>
+            <a href="/collections">Collections</a>
+            <a href="/orders">My Orders</a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="user-menu">
+
+                <div class="user-avatar"
+                     th:text="${#strings.substring(session.user.name, 0, 1).toUpperCase()}">
+                    U
+                </div>
+
+                <a href="/logout">Logout</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="order-page">
+
+    <div class="order-success">
+
+        <div class="success-mark">
+            ✓
+        </div>
+
+        <span class="eyebrow">
+            ORDER CONFIRMED
+        </span>
+
+        <h1>Thank You for Your Order</h1>
+
+        <p>
+            Your order has been successfully placed.
+        </p>
+
+        <div class="order-number">
+
+            Order #
+            <strong th:text="${order.id}">
+                1001
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <section class="order-card">
+
+        <div class="order-card-header">
+
+            <div>
+
+                <span class="small-label">
+                    ORDER STATUS
+                </span>
+
+                <strong th:text="${order.status}">
+                    PLACED
+                </strong>
+
+            </div>
+
+            <div>
+
+                <span class="small-label">
+                    ORDER DATE
+                </span>
+
+                <strong
+                    th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, HH:mm')}">
+                    19 Sep 2026
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="order-items">
+
+            <div class="order-item"
+                 th:each="item : ${order.items}">
+
+                <div>
+
+                    <strong th:text="${item.productName}">
+                        Watch
+                    </strong>
+
+                    <span>
+
+                        ₹<span th:text="${item.price}">
+                            0
+                        </span>
+
+                        ×
+
+                        <span th:text="${item.quantity}">
+                            1
+                        </span>
+
+                    </span>
+
+                </div>
+
+                <strong th:text="'₹' + ${item.subtotal}">
+                    ₹0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-divider"></div>
+
+
+        <div class="summary-total">
+
+            <span>Total</span>
+
+            <strong th:text="'₹' + ${order.totalAmount}">
+                ₹0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <section class="delivery-card">
+
+        <h2>Delivery Address</h2>
+
+        <p>
+
+            <strong th:text="${order.fullName}">
+                Customer
+            </strong>
+
+            <br>
+
+            <span th:text="${order.address}">
+                Address
+            </span>
+
+            <br>
+
+            <span th:text="${order.city + ', ' + order.state + ' - ' + order.pincode}">
+                City, State - 000000
+            </span>
+
+            <br>
+
+            <span th:text="${order.phone}">
+                Phone
+            </span>
+
+        </p>
+
+    </section>
+
+
+    <div class="order-actions">
+
+        <a href="/orders"
+           class="continue-shopping">
+            View My Orders
+        </a>
+
+        <a href="/products"
+           class="checkout-button">
+            Continue Shopping
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

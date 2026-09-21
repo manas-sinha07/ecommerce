@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Collections | California Watches</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a th:href="@{/}" class="logo">
+            CALIFORNIA WATCHES
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a th:href="@{/}">Home</a>
+            </li>
+
+            <li>
+                <a th:href="@{/products}">Watches</a>
+            </li>
+
+            <li>
+                <a th:href="@{/categories}">Collections</a>
+            </li>
+
+        </ul>
+
+        <div class="nav-actions">
+
+            <a th:href="@{/products}">
+                Watches
+            </a>
+
+            <a th:href="@{/products/add}" class="cart-link">
+                Add Watch
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- PAGE HEADER -->
+    <section class="products-page-header">
+
+        <div>
+
+            <span class="section-label">
+                CALIFORNIA WATCHES
+            </span>
+
+            <h1>
+                Collections
+            </h1>
+
+            <p>
+                Organize your watches into collections.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- COLLECTIONS -->
+    <main class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    WATCH COLLECTIONS
+                </span>
+
+                <h2 class="section-title">
+                    All Collections
+                </h2>
+
+            </div>
+
+            <a th:href="@{/categories/add}"
+               class="btn btn-primary">
+                Add Collection
+            </a>
+
+        </div>
+
+
+        <div class="collection-grid">
+
+            <div class="collection-card"
+                 th:each="category : ${categories}">
+
+                <div class="collection-content">
+
+                    <span th:text="'0' + ${category.id}">
+                        01
+                    </span>
+
+                    <h3 th:text="${category.name}">
+                        Classic
+                    </h3>
+
+                    <a th:href="@{'/categories/edit/' + ${category.id}}">
+                        Edit Collection →
+                    </a>
+
+                    <br>
+
+                    <a th:href="@{'/categories/delete/' + ${category.id}}"
+                       onclick="return confirm('Delete this collection?')">
+                        Delete Collection
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+            <div class="empty-products"
+                 th:if="${#lists.isEmpty(categories)}">
+
+                <h2>
+                    No Collections Yet
+                </h2>
+
+                <p>
+                    Create your first watch collection.
+                </p>
+
+                <a th:href="@{/categories/add}"
+                   class="btn btn-primary">
+                    Add Collection
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+
+                <a th:href="@{/}" class="logo">
+                    CALIFORNIA WATCHES
+                </a>
+
+                <p>
+                    Precision timepieces inspired by California's
+                    timeless style, coastlines and modern luxury.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Shop</h4>
+
+                <a th:href="@{/products}">
+                    All Watches
+                </a>
+
+                <a th:href="@{/categories}">
+                    Collections
+                </a>
+
+                <a th:href="@{/products/add}">
+                    Add Watch
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Company</h4>
+
+                <a th:href="@{/#about}">
+                    About Us
+                </a>
+
+                <a href="#">
+                    Contact
+                </a>
+
+                <a href="#">
+                    Shipping
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Account</h4>
+
+                <a href="#">
+                    Login
+                </a>
+
+                <a href="#">
+                    Register
+                </a>
+
+                <a href="#">
+                    My Orders
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 California Watches
+            </span>
+
+            <span>
+                Crafted for timeless moments.
+            </span>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

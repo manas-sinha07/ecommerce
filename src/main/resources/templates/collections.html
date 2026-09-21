@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Collections | California Watches</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo">
+            CALIFORNIA
+            <span>WATCHES</span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/products">
+                Watches
+            </a>
+
+            <a href="/collections"
+               class="active">
+                Collections
+            </a>
+
+            <a href="/orders"
+               th:if="${session.user != null}">
+                Your Orders
+            </a>
+
+            <a href="/cart">
+                Cart
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <!-- Logged out -->
+
+            <div th:if="${session.user == null}">
+
+                <a href="/login"
+                   class="nav-login">
+                    Login
+                </a>
+
+            </div>
+
+
+            <!-- Logged in -->
+
+            <div th:if="${session.user != null}"
+                 class="user-menu">
+
+                <div class="user-avatar"
+                     th:text="${#strings.substring(session.user.name, 0, 1).toUpperCase()}">
+                    U
+                </div>
+
+                <a href="/logout">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="collections-page">
+
+    <section class="page-header">
+
+        <span class="eyebrow">
+            EXPLORE
+        </span>
+
+        <h1>Our Collections</h1>
+
+        <p>
+            Discover timepieces designed for every
+            moment and every style.
+        </p>
+
+    </section>
+
+
+    <section class="collections-grid">
+
+        <a th:each="category : ${categories}"
+           th:href="@{'/products?category=' + ${category.name}}"
+           class="collection-card">
+
+            <div class="collection-card-content">
+
+                <span class="collection-number"
+                      th:text="${category.id}">
+                    01
+                </span>
+
+                <h2 th:text="${category.name}">
+                    Classic
+                </h2>
+
+                <span class="collection-link">
+                    Explore Collection →
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <div class="empty-collections"
+             th:if="${#lists.isEmpty(categories)}">
+
+            <h2>Collections coming soon</h2>
+
+            <p>
+                We're preparing our watch collections.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <div class="logo">
+                CALIFORNIA
+                <span>WATCHES</span>
+            </div>
+
+            <p>
+                Precision timepieces inspired by
+                California living.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <a href="/">Home</a>
+
+            <a href="/products">
+                Watches
+            </a>
+
+            <a href="/collections">
+                Collections
+            </a>
+
+            <a href="/orders"
+               th:if="${session.user != null}">
+                Your Orders
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>California Watches | Timeless Craftsmanship</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- ================================
+     NAVBAR
+================================ -->
+
+    <header class="main-header">
+
+        <div class="nav-container">
+
+            <a th:href="@{/}" class="brand">
+                <span class="brand-mark">⌁</span>
+
+                <span class="brand-text">
+                    California Watches
+                </span>
+            </a>
+
+            <nav class="main-nav">
+
+                <a th:href="@{/}" class="active">
+                    Home
+                </a>
+
+                <a th:href="@{/products}">
+                    Products
+                </a>
+                <a href="/orders" th:if="${session.user != null}">
+                    Your Orders
+                </a>
+
+                <a th:href="@{/collections}">
+                    Collections
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+            </nav>
+
+            <div class="nav-right">
+
+                <div class="search-box">
+                    <input type="text" placeholder="Search watches...">
+
+                    <span>⌕</span>
+                </div>
+
+
+                <!-- Logged out -->
+
+                <a th:if="${user == null}" th:href="@{/login}" class="nav-account-icon">
+                    ♙
+                </a>
+
+
+                <!-- Logged in -->
+
+                <a th:if="${user != null}" th:href="@{/profile}" class="user-avatar"
+                    th:text="${#strings.toUpperCase(#strings.substring(user.name, 0, 1))}">
+                    M
+                </a>
+
+
+                <!-- Cart -->
+
+                <a th:href="@{/cart}" class="cart-icon">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+     HERO
+================================ -->
+
+    <section class="hero-section">
+
+        <div class="hero-background"></div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p class="hero-label">
+                CALIFORNIA WATCHES
+            </p>
+
+            <h1>
+                Timeless Craftsmanship
+                <br>
+                <span>for Modern Life</span>
+            </h1>
+
+            <p class="hero-description">
+                Premium watches for those who chase bigger dreams.
+                Inspired by California. Built for your journey.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a th:href="@{/products}" class="primary-button">
+                    Shop Collection
+                    <span>→</span>
+                </a>
+
+                <a href="#featured" class="secondary-button">
+                    Explore
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-watch">
+
+            <img src="https://loremflickr.com/700/900/luxury-watch?lock=11" alt="Luxury watch">
+
+        </div>
+
+
+        <div class="hero-scroll">
+            <span></span>
+            Scroll to explore
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+     COLLECTION SHORTCUTS
+================================ -->
+
+    <section class="category-strip">
+
+        <a th:href="@{/products}" class="category-item">
+
+            <div class="category-image">
+                <img src="https://loremflickr.com/300/300/mens-watch?lock=21" alt="Men's Watches">
+            </div>
+
+            <span>Men's Watches</span>
+            <small>→</small>
+
+        </a>
+
+
+        <a th:href="@{/products}" class="category-item">
+
+            <div class="category-image">
+                <img src="https://loremflickr.com/300/300/womens-watch?lock=22" alt="Women's Watches">
+            </div>
+
+            <span>Women's Watches</span>
+            <small>→</small>
+
+        </a>
+
+
+        <a th:href="@{/products}" class="category-item">
+
+            <div class="category-image">
+                <img src="https://loremflickr.com/300/300/sport-watch?lock=23" alt="Sport Watches">
+            </div>
+
+            <span>Sport Watches</span>
+            <small>→</small>
+
+        </a>
+
+
+        <a th:href="@{/products}" class="category-item">
+
+            <div class="category-image">
+                <img src="https://loremflickr.com/300/300/smartwatch?lock=24" alt="Smart Watches">
+            </div>
+
+            <span>Smart Watches</span>
+            <small>→</small>
+
+        </a>
+
+
+        <a th:href="@{/products}" class="category-item">
+
+            <div class="category-image">
+                <img src="https://loremflickr.com/300/300/classic-watch?lock=25" alt="Classic Watches">
+            </div>
+
+            <span>Classic Collection</span>
+            <small>→</small>
+
+        </a>
+
+
+        <a th:href="@{/products}" class="category-item">
+
+            <div class="category-image">
+                <img src="https://loremflickr.com/300/300/luxury-watch?lock=26" alt="Limited Edition">
+            </div>
+
+            <span>Limited Edition</span>
+            <small>→</small>
+
+        </a>
+
+    </section>
+
+
+    <!-- ================================
+     FEATURED PRODUCTS
+================================ -->
+
+    <section class="featured-section" id="featured">
+
+        <div class="featured-intro">
+
+            <p class="section-label">
+                FEATURED COLLECTION
+            </p>
+
+            <h2>
+                Popular Watches
+            </h2>
+
+            <p>
+                Discover our most loved timepieces,
+                crafted for every style and occasion.
+            </p>
+
+            <a th:href="@{/products}" class="primary-button">
+                View All Products
+                <span>→</span>
+            </a>
+
+        </div>
+
+
+        <div class="featured-products">
+
+            <div class="home-product-card" th:each="product : ${products}">
+
+                <a th:href="@{'/products/details/' + ${product.id}}" class="home-product-image">
+
+                    <!-- Use uploaded image if one exists -->
+                    <img th:if="${product.image != null and product.image.length > 0}"
+                        th:src="@{'/product/' + ${product.id} + '/image'}" th:alt="${product.name}">
+
+                    <!-- Automatic online image if no uploaded image exists -->
+                    <img th:if="${product.image == null or product.image.length == 0}"
+                        th:src="'https://loremflickr.com/700/700/watch?lock=' + ${product.id}" th:alt="${product.name}">
+
+                </a>
+
+                <div class="home-product-info">
+
+                    <span class="product-tag">
+                        Featured
+                    </span>
+
+                    <h3 th:text="${product.name}">
+                        Ocean Explorer
+                    </h3>
+
+                    <p th:text="${product.description}">
+                        Premium timepiece
+                    </p>
+
+                    <div class="home-product-bottom">
+
+                        <strong th:text="'₹' + ${product.price}">
+                            ₹299.00
+                        </strong>
+
+                        <a th:href="@{'/products/details/' + ${product.id}}">
+                            View →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Shown when there are no products -->
+
+            <div th:if="${products == null or #lists.isEmpty(products)}" class="empty-products">
+
+                <h3>
+                    Our collection is coming soon.
+                </h3>
+
+                <p>
+                    New timepieces will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+     CALIFORNIA STORY
+================================ -->
+
+    <section class="story-section" id="about">
+
+        <div class="story-image">
+
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=85"
+                alt="California beach">
+
+        </div>
+
+        <div class="story-content">
+
+            <p class="section-label">
+                THE CALIFORNIA SPIRIT
+            </p>
+
+            <h2>
+                Made for moments
+                <br>
+                that matter.
+            </h2>
+
+            <p>
+                California Watches brings together timeless
+                design and modern living. Every piece is created
+                for people who value precision, simplicity
+                and individuality.
+            </p>
+
+            <a th:href="@{/products}" class="text-button">
+                Discover the collection →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+     SERVICE STRIP
+================================ -->
+
+    <section class="service-strip">
+
+        <div class="service-item">
+
+            <div class="service-icon">
+                ♧
+            </div>
+
+            <div>
+                <strong>Free Shipping</strong>
+                <span>On orders over ₹5,000</span>
+            </div>
+
+        </div>
+
+
+        <div class="service-item">
+
+            <div class="service-icon">
+                ◇
+            </div>
+
+            <div>
+                <strong>Secure Payment</strong>
+                <span>Safe and secure checkout</span>
+            </div>
+
+        </div>
+
+
+        <div class="service-item">
+
+            <div class="service-icon">
+                ♧
+            </div>
+
+            <div>
+                <strong>Customer Support</strong>
+                <span>We're here to help</span>
+            </div>
+
+        </div>
+
+
+        <div class="service-item">
+
+            <div class="service-icon">
+                ↩
+            </div>
+
+            <div>
+                <strong>Easy Returns</strong>
+                <span>Simple return process</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+     FOOTER
+================================ -->
+
+    <footer class="main-footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <h3>
+                    California Watches
+                </h3>
+
+                <p>
+                    Timeless watches inspired by
+                    the California lifestyle.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <div>
+                    <h4>Shop</h4>
+
+                    <a th:href="@{/products}">
+                        All Watches
+                    </a>
+
+                    <a th:href="@{/categories}">
+                        Collections
+                    </a>
+
+                    <a th:href="@{/cart}">
+                        Cart
+                    </a>
+                </div>
+
+
+                <div>
+                    <h4>Account</h4>
+
+                    <a th:href="@{/login}">
+                        Login
+                    </a>
+
+                    <a th:href="@{/register}">
+                        Register
+                    </a>
+
+                    <a href="#">
+                        Orders
+                    </a>
+                </div>
+
+
+                <div>
+                    <h4>Company</h4>
+
+                    <a href="#about">
+                        About
+                    </a>
+
+                    <a href="#">
+                        Contact
+                    </a>
+
+                    <a href="#">
+                        Privacy
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 California Watches
+            </span>
+
+            <span>
+                Crafted for modern life.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

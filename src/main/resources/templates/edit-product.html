@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product | California Watches</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin" class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-form-container">
+
+        <div class="page-header">
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>Edit Product</h1>
+
+            <p>Update the watch information below.</p>
+
+        </div>
+
+
+        <form th:action="@{'/admin/products/update/' + ${product.id}}"
+              method="post"
+              th:object="${product}"
+              class="product-form">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Watch Name
+                </label>
+
+                <input type="text"
+                       id="name"
+                       th:field="*{name}"
+                       required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea id="description"
+                          th:field="*{description}"
+                          rows="5"
+                          required></textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="price">
+                        Price
+                    </label>
+
+                    <input type="number"
+                           id="price"
+                           th:field="*{price}"
+                           min="0"
+                           step="0.01"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="quantity">
+                        Stock Quantity
+                    </label>
+
+                    <input type="number"
+                           id="quantity"
+                           th:field="*{quantity}"
+                           min="0"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">
+                    Image Filename
+                </label>
+
+                <input type="text"
+                       id="image"
+                       th:field="*{image}"
+                       placeholder="example.jpg">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="category">
+                    Collection
+                </label>
+
+                <select id="category"
+                        th:field="*{category}"
+                        required>
+
+                    <option value=""
+                            disabled>
+                        Select Collection
+                    </option>
+
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a href="/admin/products"
+                   class="secondary-button">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-button">
+                    Update Product
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

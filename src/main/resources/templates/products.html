@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Watches | California Watches</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <header class="main-header">
+
+        <div class="nav-container">
+
+            <a th:href="@{/}" class="brand">
+
+                <span class="brand-mark">⌁</span>
+
+                <span class="brand-text">
+                    California Watches
+                </span>
+
+            </a>
+
+
+            <nav class="main-nav">
+
+                <a th:href="@{/}">
+                    Home
+                </a>
+
+                <a th:href="@{/products}" class="active">
+                    Products
+                </a>
+
+                <a th:href="@{/collections}">
+                    Collections
+                </a>
+
+                <a href="/#about">
+                    About
+                </a>
+
+            </nav>
+
+
+            <div class="nav-right">
+
+                <div class="search-box">
+
+                    <input type="text" placeholder="Search watches...">
+
+                    <span>⌕</span>
+
+                </div>
+
+
+                <a th:if="${user == null}" th:href="@{/login}" class="nav-account-icon">
+                    ♙
+                </a>
+
+
+                <a th:if="${user != null}" th:href="@{/profile}" class="user-avatar"
+                    th:text="${#strings.toUpperCase(#strings.substring(user.name, 0, 1))}">
+                    M
+                </a>
+
+
+                <a th:href="@{/cart}" class="cart-icon">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="products-page">
+
+        <section class="products-heading">
+
+            <p class="section-label">
+                CALIFORNIA WATCHES
+            </p>
+
+            <h1>
+                Our Collection
+            </h1>
+
+            <p>
+                Explore our selection of watches designed
+                for every occasion.
+            </p>
+
+        </section>
+
+
+        <div class="products-toolbar">
+
+            <span th:text="${#lists.size(products)} + ' watches'">
+                0 watches
+            </span>
+
+            <select>
+
+                <option>
+                    Featured
+                </option>
+
+                <option>
+                    Price: Low to High
+                </option>
+
+                <option>
+                    Price: High to Low
+                </option>
+
+                <option>
+                    Newest
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <section class="products-grid">
+
+            <article class="store-product-card" th:each="product : ${products}">
+
+                <a th:href="@{'/products/details/' + ${product.id}}" class="store-product-image">
+
+
+                    <span class="store-product-category" th:if="${product.category != null}"
+                        th:text="${product.category.name}">
+                        Classic
+                    </span>
+
+
+                    <img th:if="${product.image != null and !product.image.length > 0}"
+                        th:src="@{'/images/' + ${product.image}}" th:alt="${product.name}">
+
+
+                    <img th:if="${product.image == null or product.image.length > 0}"
+                        th:src="'https://loremflickr.com/800/800/watch?lock=' + ${product.id}" th:alt="${product.name}">
+
+                </a>
+
+
+                <div class="store-product-info">
+
+                    <h2 th:text="${product.name}">
+                        Midnight Classic
+                    </h2>
+
+                    <p th:text="${product.description}">
+                        Classic automatic watch.
+                    </p>
+
+
+                    <div class="store-product-footer">
+
+                        <strong th:text="'₹' + ${product.price}">
+                            ₹249.00
+                        </strong>
+
+                        <a th:href="@{'/products/details/' + ${product.id}}">
+                            View →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <div th:if="${products == null or #lists.isEmpty(products)}" class="empty-products">
+
+                <h2>
+                    No watches available
+                </h2>
+
+                <p>
+                    Our collection is currently being updated.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="main-footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <h3>
+                    California Watches
+                </h3>
+
+                <p>
+                    Timeless watches inspired by California.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 California Watches
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | California Watches</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin"
+           class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+
+            <a href="/"
+               class="admin-store-link">
+                View Store
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-header">
+
+        <div>
+
+            <span class="section-label">
+                CALIFORNIA WATCHES
+            </span>
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Manage your store from one place.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section class="admin-stats">
+
+        <a href="/admin/products"
+           class="admin-stat-card">
+
+            <span>PRODUCTS</span>
+
+            <strong th:text="${productCount}">
+                0
+            </strong>
+
+            <small>
+                Manage inventory →
+            </small>
+
+        </a>
+
+
+        <a href="/admin/categories"
+           class="admin-stat-card">
+
+            <span>COLLECTIONS</span>
+
+            <strong th:text="${categoryCount}">
+                0
+            </strong>
+
+            <small>
+                Manage collections →
+            </small>
+
+        </a>
+
+
+        <a href="/admin/orders"
+           class="admin-stat-card">
+
+            <span>ORDERS</span>
+
+            <strong th:text="${orderCount}">
+                0
+            </strong>
+
+            <small>
+                Manage orders →
+            </small>
+
+        </a>
+
+
+        <a href="/admin/customers"
+           class="admin-stat-card">
+
+            <span>CUSTOMERS</span>
+
+            <strong th:text="${customerCount}">
+                0
+            </strong>
+
+            <small>
+                View customers →
+            </small>
+
+        </a>
+
+    </section>
+
+
+    <section class="admin-quick-actions">
+
+        <div>
+
+            <span class="section-label">
+                QUICK ACTIONS
+            </span>
+
+            <h2>Store Management</h2>
+
+        </div>
+
+
+        <div class="quick-action-grid">
+
+            <a href="/admin/products/add"
+               class="quick-action">
+                Add Product
+            </a>
+
+            <a href="/admin/categories/add"
+               class="quick-action">
+                Add Collection
+            </a>
+
+            <a href="/admin/orders"
+               class="quick-action">
+                View Orders
+            </a>
+
+            <a href="/"
+               class="quick-action">
+                Visit Store
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

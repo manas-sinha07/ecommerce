@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Products | California Watches Admin</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin"
+           class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-header">
+
+        <div>
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>Products</h1>
+
+            <p>Manage your watch inventory.</p>
+
+        </div>
+
+        <a href="/admin/products/add"
+           class="primary-button">
+            + Add Product
+        </a>
+
+    </div>
+
+
+    <div class="admin-table-wrapper">
+
+        <table class="admin-table">
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Product</th>
+                <th>Collection</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="product : ${products}">
+
+                <td th:text="${product.id}">
+                    1
+                </td>
+
+                <td>
+
+                    <div class="admin-product-name">
+
+                        <strong th:text="${product.name}">
+                            Watch
+                        </strong>
+
+                        <small th:text="${product.description}">
+                            Description
+                        </small>
+
+                    </div>
+
+                </td>
+
+                <td th:text="${product.category != null ? product.category.name : 'Uncategorized'}">
+                    Classic
+                </td>
+
+                <td th:text="'₹' + ${product.price}">
+                    ₹0
+                </td>
+
+                <td>
+
+                    <span th:if="${product.quantity > 0}"
+                          th:text="${product.quantity}">
+                        10
+                    </span>
+
+                    <span th:if="${product.quantity == 0}"
+                          class="stock-out">
+                        Out of Stock
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <div class="admin-actions">
+
+                        <a th:href="@{'/admin/products/edit/' + ${product.id}}"
+                           class="edit-button">
+                            Edit
+                        </a>
+
+                        <a th:href="@{'/admin/products/delete/' + ${product.id}}"
+                           class="delete-button"
+                           onclick="return confirm('Delete this product?')">
+                            Delete
+                        </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+
+            <tr th:if="${#lists.isEmpty(products)}">
+
+                <td colspan="6"
+                    class="empty-table">
+                    No products found.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+</body>
+</html>

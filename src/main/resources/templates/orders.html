@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | California Watches</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo">
+            CALIFORNIA
+            <span>WATCHES</span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="/">Home</a>
+            <a href="/products">Watches</a>
+            <a href="/collections">Collections</a>
+            <a href="/orders" class="active">
+                My Orders
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="user-menu">
+
+                <div class="user-avatar"
+                     th:text="${#strings.substring(session.user.name, 0, 1).toUpperCase()}">
+                    U
+                </div>
+
+                <a href="/logout">Logout</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="orders-page">
+
+    <section class="page-header">
+
+        <span class="eyebrow">YOUR ACCOUNT</span>
+
+        <h1>My Orders</h1>
+
+        <p>
+            View your previous California Watches purchases.
+        </p>
+
+    </section>
+
+
+    <section class="orders-container">
+
+        <div class="order-list"
+             th:if="${!#lists.isEmpty(orders)}">
+
+            <a class="order-list-item"
+               th:each="order : ${orders}"
+               th:href="@{'/orders/' + ${order.id}}">
+
+                <div>
+
+                    <span class="small-label">
+                        ORDER
+                    </span>
+
+                    <h2 th:text="'#' + ${order.id}">
+                        #1001
+                    </h2>
+
+                </div>
+
+
+                <div>
+
+                    <span class="small-label">
+                        DATE
+                    </span>
+
+                    <span
+                        th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy')}">
+                        19 Sep 2026
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <span class="small-label">
+                        STATUS
+                    </span>
+
+                    <span class="order-status"
+                          th:text="${order.status}">
+                        PLACED
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <span class="small-label">
+                        TOTAL
+                    </span>
+
+                    <strong
+                        th:text="'₹' + ${order.totalAmount}">
+                        ₹0
+                    </strong>
+
+                </div>
+
+                <span class="order-arrow">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="empty-cart"
+             th:if="${#lists.isEmpty(orders)}">
+
+            <h2>No orders yet</h2>
+
+            <p>
+                Your completed purchases will appear here.
+            </p>
+
+            <a href="/products"
+               class="checkout-button">
+                Explore Watches
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

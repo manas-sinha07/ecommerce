@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Watch | California Watches</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <header class="admin-navbar">
+
+        <div class="admin-nav-container">
+
+            <a th:href="@{/admin}" class="admin-logo">
+                California Watches
+            </a>
+
+            <nav class="admin-nav-links">
+
+                <a th:href="@{/admin}">
+                    Dashboard
+                </a>
+
+                <a th:href="@{/admin/products}" class="active">
+                    Products
+                </a>
+
+                <a th:href="@{/admin/categories}">
+                    Collections
+                </a>
+
+                <a th:href="@{/admin/orders}">
+                    Orders
+                </a>
+
+                <a th:href="@{/admin/customers}">
+                    Customers
+                </a>
+
+                <a th:href="@{/}">
+                    View Store
+                </a>
+
+                <a th:href="@{/logout}">
+                    Logout
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="admin-page">
+
+        <section class="admin-header">
+
+            <div>
+
+                <span class="admin-eyebrow">
+                    PRODUCT MANAGEMENT
+                </span>
+
+                <h1>
+                    Add New Watch
+                </h1>
+
+                <p>
+                    Add a new timepiece to your collection.
+                </p>
+
+            </div>
+
+            <a th:href="@{/admin/products}" class="secondary-button">
+
+                ← Back to Watches
+
+            </a>
+
+        </section>
+
+
+        <div class="admin-form-container">
+
+            <form th:action="@{/admin/products/save}" method="post" enctype="multipart/form-data">
+
+
+                <!-- WATCH NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Watch Name
+                    </label>
+
+                    <input type="text" id="name" name="name" placeholder="Enter watch name" required>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea id="description" name="description" rows="5" placeholder="Enter watch description"
+                        required></textarea>
+
+                </div>
+
+
+                <!-- PRICE + QUANTITY -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="price">
+                            Price (₹)
+                        </label>
+
+                        <input type="number" id="price" name="price" step="0.01" min="0" placeholder="0.00" required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="quantity">
+                            Quantity
+                        </label>
+
+                        <input type="number" id="quantity" name="quantity" min="0" placeholder="0" required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group">
+                    <label for="imageFile">Product Image</label>
+                    <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+                </div>
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Collection
+                    </label>
+
+                    <select id="category" name="category.id" required>
+
+                        <option value="">
+                            Select a collection
+                        </option>
+
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+                            Classic
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-actions">
+
+                    <a th:href="@{/admin/products}" class="secondary-button">
+
+                        Cancel
+
+                    </a>
+
+                    <button type="submit" class="primary-button">
+
+                        Add Watch
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="footer-bottom">
+
+            © 2026 California Watches
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

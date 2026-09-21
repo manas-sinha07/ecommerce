@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Orders | California Watches Admin</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin"
+           class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-header">
+
+        <div>
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>Orders</h1>
+
+            <p>Manage customer orders and delivery status.</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="admin-table-wrapper">
+
+        <table class="admin-table">
+
+            <thead>
+
+            <tr>
+
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Update</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="order : ${orders}">
+
+                <td th:text="'#' + ${order.id}">
+                    #1
+                </td>
+
+                <td>
+
+                    <strong th:text="${order.fullName}">
+                        Customer
+                    </strong>
+
+                    <small th:text="${order.email}">
+                        email@example.com
+                    </small>
+
+                </td>
+
+                <td th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy HH:mm')}">
+                    19 Sep 2026
+                </td>
+
+                <td th:text="'₹' + ${order.totalAmount}">
+                    ₹0
+                </td>
+
+                <td>
+
+                    <span class="status-badge"
+                          th:text="${order.status}">
+                        PLACED
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <form th:action="@{'/admin/orders/status/' + ${order.id}}"
+                          method="post">
+
+                        <select name="status">
+
+                            <option value="PLACED"
+                                    th:selected="${order.status == 'PLACED'}">
+                                Placed
+                            </option>
+
+                            <option value="CONFIRMED"
+                                    th:selected="${order.status == 'CONFIRMED'}">
+                                Confirmed
+                            </option>
+
+                            <option value="SHIPPED"
+                                    th:selected="${order.status == 'SHIPPED'}">
+                                Shipped
+                            </option>
+
+                            <option value="DELIVERED"
+                                    th:selected="${order.status == 'DELIVERED'}">
+                                Delivered
+                            </option>
+
+                            <option value="CANCELLED"
+                                    th:selected="${order.status == 'CANCELLED'}">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                        <button type="submit"
+                                class="edit-button">
+                            Update
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+
+            <tr th:if="${#lists.isEmpty(orders)}">
+
+                <td colspan="6"
+                    class="empty-table">
+                    No orders yet.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+</body>
+</html>

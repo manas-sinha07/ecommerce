@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Collection | California Watches</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin"
+           class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-form-container">
+
+        <div class="page-header">
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>Add Collection</h1>
+
+            <p>Create a new watch collection.</p>
+
+        </div>
+
+
+        <form th:action="@{/admin/categories/save}"
+              method="post"
+              th:object="${category}"
+              class="product-form">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Collection Name
+                </label>
+
+                <input type="text"
+                       id="name"
+                       th:field="*{name}"
+                       placeholder="Classic"
+                       required>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a href="/admin/categories"
+                   class="secondary-button">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="primary-button">
+                    Add Collection
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

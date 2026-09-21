@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Cart | California Watches</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="/" class="logo">
+                CALIFORNIA
+                <span>WATCHES</span>
+            </a>
+
+            <nav class="nav-links">
+
+                <a href="/">Home</a>
+
+                <a href="/products">Watches</a>
+
+                <a href="/collections">Collections</a>
+
+                <a href="/cart" class="active">
+                    Cart
+                    <span class="cart-count" th:if="${cartCount > 0}" th:text="${cartCount}">
+                        0
+                    </span>
+                </a>
+
+            </nav>
+
+            <div class="nav-actions">
+
+                <a href="/login" th:if="${session.user == null}" class="nav-login">
+                    Login
+                </a>
+
+                <div th:if="${session.user != null}" class="user-menu">
+
+                    <div class="user-avatar" th:text="${#strings.substring(session.user.name, 0, 1).toUpperCase()}">
+                        U
+                    </div>
+
+                    <a href="/logout">Logout</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="cart-page">
+
+        <section class="page-header">
+
+            <span class="eyebrow">YOUR SELECTION</span>
+
+            <h1>Your Cart</h1>
+
+            <p>
+                Review your selected timepieces before checkout.
+            </p>
+
+        </section>
+
+
+        <section class="cart-container">
+
+            <div class="cart-items" th:if="${!#lists.isEmpty(cartItems)}">
+
+                <div class="cart-item" th:each="item : ${cartItems}">
+
+                    <div class="cart-product-image">
+
+                        <img th:if="${item.product.image != null and item.product.image.length > 0}"
+                            th:src="@{'/product/' + ${item.product.id} + '/image'}" th:alt="${item.product.name}">
+
+                        <div th:unless="${item.product.image != null and item.product.image.length > 0}"
+                            class="image-placeholder">
+                            WATCH
+                        </div>
+
+                    </div>
+
+                    <div class="cart-product-info">
+
+                        <span class="cart-category" th:text="${item.product.category.name}">
+                            Collection
+                        </span>
+
+                        <h2 th:text="${item.product.name}">
+                            Watch Name
+                        </h2>
+
+                        <p th:text="${item.product.description}">
+                            Watch description
+                        </p>
+
+                        <span class="cart-price" th:text="'₹' + ${item.product.price}">
+                            ₹0
+                        </span>
+
+                    </div>
+
+
+                    <div class="cart-quantity">
+
+                        <form th:action="@{'/cart/update/' + ${item.id}}" method="post">
+
+                            <button type="submit" name="quantity" th:value="${item.quantity - 1}">
+                                −
+                            </button>
+
+                            <span th:text="${item.quantity}">
+                                1
+                            </span>
+
+                            <button type="submit" name="quantity" th:value="${item.quantity + 1}"
+                                th:disabled="${item.quantity >= item.product.quantity}">
+                                +
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="cart-item-total">
+
+                        <strong th:text="'₹' + ${item.product.price * item.quantity}">
+                            ₹0
+                        </strong>
+
+                        <a th:href="@{'/cart/remove/' + ${item.id}}" class="remove-item">
+                            Remove
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="cart-actions">
+
+                    <a href="/products" class="continue-shopping">
+                        Continue Shopping
+                    </a>
+
+                    <a href="/cart/clear" class="clear-cart">
+                        Clear Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="cart-summary" th:if="${!#lists.isEmpty(cartItems)}">
+
+                <div class="summary-header">
+                    <span>ORDER SUMMARY</span>
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Items</span>
+
+                    <span th:text="${cartCount}">
+                        0
+                    </span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Subtotal</span>
+
+                    <span th:text="'₹' + ${cartTotal}">
+                        ₹0
+                    </span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Shipping</span>
+
+                    <span>FREE</span>
+
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total">
+
+                    <span>Total</span>
+
+                    <strong th:text="'₹' + ${cartTotal}">
+                        ₹0
+                    </strong>
+
+                </div>
+
+                <a href="/checkout" class="checkout-button">
+                    Proceed to Checkout
+                </a>
+
+            </div>
+
+
+            <div class="empty-cart" th:if="${#lists.isEmpty(cartItems)}">
+
+                <div class="empty-cart-icon">
+                    —
+                </div>
+
+                <h2>Your cart is empty</h2>
+
+                <p>
+                    Discover a timepiece that fits your style.
+                </p>
+
+                <a href="/products" class="checkout-button">
+                    Explore Watches
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <div class="logo">
+                    CALIFORNIA
+                    <span>WATCHES</span>
+                </div>
+
+                <p>
+                    Precision timepieces inspired by
+                    California living.
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="/">Home</a>
+                <a href="/products">Watches</a>
+                <a href="/categories">Collections</a>
+                <a href="/cart">Cart</a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

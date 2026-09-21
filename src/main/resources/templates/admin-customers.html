@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Customers | California Watches Admin</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/admin"
+           class="logo">
+            California Watches
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin">Dashboard</a>
+            <a href="/admin/products">Products</a>
+            <a href="/admin/categories">Collections</a>
+            <a href="/admin/orders">Orders</a>
+            <a href="/admin/customers">Customers</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="admin-page">
+
+    <div class="admin-header">
+
+        <div>
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>Customers</h1>
+
+            <p>View registered customer accounts.</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="admin-table-wrapper">
+
+        <table class="admin-table">
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Email</th>
+                <th>Role</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="customer : ${customers}"
+                th:if="${customer.role != 'ADMIN'}">
+
+                <td th:text="${customer.id}">
+                    1
+                </td>
+
+                <td>
+
+                    <div class="customer-avatar"
+                         th:text="${#strings.substring(customer.name, 0, 1).toUpperCase()}">
+                        M
+                    </div>
+
+                    <strong th:text="${customer.name}">
+                        Customer
+                    </strong>
+
+                </td>
+
+                <td th:text="${customer.email}">
+                    customer@example.com
+                </td>
+
+                <td>
+                    <span class="status-badge"
+                          th:text="${customer.role}">
+                        USER
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr th:if="${#lists.isEmpty(customers)}">
+
+                <td colspan="4"
+                    class="empty-table">
+                    No customers found.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+</body>
+</html>

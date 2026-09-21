@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | California Watches</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo">
+            CALIFORNIA
+            <span>WATCHES</span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="/">Home</a>
+            <a href="/products">Watches</a>
+            <a href="/categories">Collections</a>
+            <a href="/cart">Cart</a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="user-menu">
+
+                <div class="user-avatar"
+                     th:text="${#strings.substring(session.user.name, 0, 1).toUpperCase()}">
+                    U
+                </div>
+
+                <a href="/logout">Logout</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="checkout-page">
+
+    <section class="page-header">
+
+        <span class="eyebrow">SECURE CHECKOUT</span>
+
+        <h1>Complete Your Order</h1>
+
+        <p>
+            Enter your delivery details and review your order.
+        </p>
+
+    </section>
+
+
+    <div class="checkout-container">
+
+        <section class="checkout-form-section">
+
+            <div class="checkout-card">
+
+                <h2>Delivery Details</h2>
+
+                <p class="checkout-description">
+                    Where should we deliver your watch?
+                </p>
+
+                <div class="checkout-error"
+                     th:if="${error}"
+                     th:text="${error}">
+                </div>
+
+                <form th:action="@{/checkout/place-order}"
+                      method="post">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
+                            <input type="text"
+                                   id="fullName"
+                                   name="fullName"
+                                   th:value="${user.name}"
+                                   required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   th:value="${user.email}"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input type="tel"
+                               id="phone"
+                               name="phone"
+                               placeholder="Enter your phone number"
+                               required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="address">
+                            Address
+                        </label>
+
+                        <textarea id="address"
+                                  name="address"
+                                  rows="4"
+                                  placeholder="House number, street, area"
+                                  required></textarea>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="city">
+                                City
+                            </label>
+
+                            <input type="text"
+                                   id="city"
+                                   name="city"
+                                   required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="state">
+                                State
+                            </label>
+
+                            <input type="text"
+                                   id="state"
+                                   name="state"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="pincode">
+                            PIN Code
+                        </label>
+
+                        <input type="text"
+                               id="pincode"
+                               name="pincode"
+                               maxlength="6"
+                               required>
+
+                    </div>
+
+
+                    <button type="submit"
+                            class="checkout-submit">
+
+                        Place Order
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <aside class="checkout-summary">
+
+            <div class="checkout-card">
+
+                <h2>Your Order</h2>
+
+                <div class="checkout-products">
+
+                    <div class="checkout-product"
+                         th:each="item : ${cartItems}">
+
+                        <div>
+
+                            <strong th:text="${item.product.name}">
+                                Watch
+                            </strong>
+
+                            <span>
+                                Qty:
+                                <span th:text="${item.quantity}">
+                                    1
+                                </span>
+                            </span>
+
+                        </div>
+
+                        <strong
+                            th:text="'₹' + ${item.product.price * item.quantity}">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-row">
+
+                    <span>Subtotal</span>
+
+                    <span th:text="'₹' + ${cartTotal}">
+                        ₹0
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>Shipping</span>
+
+                    <span>FREE</span>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <span>Total</span>
+
+                    <strong th:text="'₹' + ${cartTotal}">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <div class="logo">
+                CALIFORNIA
+                <span>WATCHES</span>
+            </div>
+
+            <p>
+                Precision timepieces inspired by California living.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

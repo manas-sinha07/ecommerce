@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${product.name} + ' | California Watches'">
+        Watch | California Watches
+    </title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <header class="main-header">
+
+        <div class="nav-container">
+
+            <a th:href="@{/}" class="brand">
+
+                <span class="brand-mark">⌁</span>
+
+                <span class="brand-text">
+                    California Watches
+                </span>
+
+            </a>
+
+
+            <nav class="main-nav">
+
+                <a th:href="@{/}">
+                    Home
+                </a>
+
+                <a th:href="@{/products}" class="active">
+                    Products
+                </a>
+
+                <a th:href="@{/collections}">
+                    Collections
+                </a>
+
+                <a href="/#about">
+                    About
+                </a>
+
+            </nav>
+
+
+            <div class="nav-right">
+
+                <a th:if="${user == null}" th:href="@{/login}" class="nav-account-icon">
+                    ♙
+                </a>
+
+                <a th:if="${user != null}" th:href="@{/profile}" class="user-avatar"
+                    th:text="${#strings.toUpperCase(#strings.substring(user.name, 0, 1))}">
+                    M
+                </a>
+
+                <a th:href="@{/cart}" class="cart-icon">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="details-page">
+
+        <a th:href="@{/products}" class="details-back">
+            ← Back to Watches
+        </a>
+
+
+        <section class="details-container">
+
+            <div class="details-image">
+
+                <img th:if="${product.image != null and product.image.length > 0}"
+                    th:src="@{'/product/' + ${product.id} + '/image'}" th:alt="${product.name}">
+
+                <img th:if="${product.image == null or product.image.length == 0}"
+                    th:src="'https://loremflickr.com/700/700/watch?lock=' + ${product.id}" th:alt="${product.name}">
+
+            </div>
+
+
+            <div class="details-content">
+
+                <span class="details-category" th:if="${product.category != null}" th:text="${product.category.name}">
+                    Classic
+                </span>
+
+
+                <h1 th:text="${product.name}">
+                    Ocean Explorer
+                </h1>
+
+
+                <div class="details-price" th:text="'₹' + ${product.price}">
+                    ₹299.00
+                </div>
+
+
+                <p class="details-description" th:text="${product.description}">
+                    Premium watch crafted for everyday life.
+                </p>
+
+
+                <div class="details-stock">
+
+                    <span th:if="${product.quantity > 0}">
+                        In Stock
+                    </span>
+
+                    <span th:if="${product.quantity <= 0}">
+                        Out of Stock
+                    </span>
+
+                </div>
+
+                <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+
+                    <div class="quantity-section">
+
+                        <span>
+                            Quantity
+                        </span>
+
+                        <div class="quantity-control">
+
+                            <button type="button" onclick="decreaseQuantity()">
+                                −
+                            </button>
+
+                            <input id="quantity" type="number" name="quantity" value="1" min="1"
+                                th:max="${product.quantity}">
+
+                            <button type="button" onclick="increaseQuantity()">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="add-cart-button" th:disabled="${product.quantity <= 0}">
+                        Add to Cart
+                    </button>
+
+                </form>
+
+
+                <div class="details-info">
+
+                    <div>
+                        <span>Collection</span>
+
+                        <strong th:if="${product.category != null}" th:text="${product.category.name}">
+                            Classic
+                        </strong>
+                    </div>
+
+
+                    <div>
+                        <span>Availability</span>
+
+                        <strong th:if="${product.quantity > 0}">
+                            Available
+                        </strong>
+
+                        <strong th:if="${product.quantity <= 0}">
+                            Sold Out
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="main-footer">
+
+        <div class="footer-bottom">
+
+            © 2026 California Watches
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function increaseQuantity() {
+
+            const input = document.getElementById("quantity");
+
+            const max = parseInt(input.max);
+
+            let value = parseInt(input.value);
+
+            if (value < max) {
+                input.value = value + 1;
+            }
+        }
+
+
+        function decreaseQuantity() {
+
+            const input = document.getElementById("quantity");
+
+            let value = parseInt(input.value);
+
+            if (value > 1) {
+                input.value = value - 1;
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

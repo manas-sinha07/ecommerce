@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | California Watches</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a th:href="@{/}" class="logo">
+            California Watches
+        </a>
+
+        <nav class="nav-links">
+
+            <a th:href="@{/}">Home</a>
+
+            <a th:href="@{/products}">Watches</a>
+
+            <a th:href="@{/collections}">Collections</a>
+
+            <a th:href="@{/orders}">Your Orders</a>
+
+            <a th:href="@{/cart}">Cart</a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <a th:href="@{/profile}" class="user-avatar"
+               th:text="${#strings.substring(user.name, 0, 1).toUpperCase()}">
+                U
+            </a>
+
+            <a th:href="@{/logout}" class="logout-link">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="profile-page">
+
+    <div class="profile-container">
+
+        <div class="profile-header">
+
+            <div class="profile-avatar"
+                 th:text="${#strings.substring(user.name, 0, 1).toUpperCase()}">
+                U
+            </div>
+
+            <div>
+                <h1>My Profile</h1>
+                <p>Manage your California Watches account.</p>
+            </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-row">
+
+                <span class="profile-label">Name</span>
+
+                <span class="profile-value"
+                      th:text="${user.name}">
+                    User Name
+                </span>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <span class="profile-label">Email</span>
+
+                <span class="profile-value"
+                      th:text="${user.email}">
+                    user@email.com
+                </span>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <span class="profile-label">Account Type</span>
+
+                <span class="profile-value"
+                      th:text="${user.role}">
+                    USER
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-actions">
+
+            <a th:href="@{/orders}" class="profile-button">
+                View My Orders
+            </a>
+
+            <a th:href="@{/cart}" class="profile-button">
+                View Cart
+            </a>
+
+            <a th:href="@{/logout}" class="profile-button logout-button">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
