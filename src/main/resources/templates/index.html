@@ -37,6 +37,7 @@
                 <a th:href="@{/products}">
                     Products
                 </a>
+
                 <a href="/orders" th:if="${session.user != null}">
                     Your Orders
                 </a>
@@ -134,7 +135,7 @@
 
         <div class="hero-watch">
 
-            <img src="https://loremflickr.com/700/900/luxury-watch?lock=11" alt="Luxury watch">
+            <img th:src="@{/images/luxury-watch.jpg}" alt="Luxury watch">
 
         </div>
 
@@ -156,7 +157,7 @@
         <a th:href="@{/products}" class="category-item">
 
             <div class="category-image">
-                <img src="https://loremflickr.com/300/300/mens-watch?lock=21" alt="Men's Watches">
+                <img th:src="@{/images/mens-watches.jpg}" alt="Men's Watches">
             </div>
 
             <span>Men's Watches</span>
@@ -168,7 +169,7 @@
         <a th:href="@{/products}" class="category-item">
 
             <div class="category-image">
-                <img src="https://loremflickr.com/300/300/womens-watch?lock=22" alt="Women's Watches">
+                <img th:src="@{/images/womens-watches.jpg}" alt="Women's Watches">
             </div>
 
             <span>Women's Watches</span>
@@ -180,7 +181,7 @@
         <a th:href="@{/products}" class="category-item">
 
             <div class="category-image">
-                <img src="https://loremflickr.com/300/300/sport-watch?lock=23" alt="Sport Watches">
+                <img th:src="@{/images/sport-watches.jpg}" alt="Sport Watches">
             </div>
 
             <span>Sport Watches</span>
@@ -192,7 +193,7 @@
         <a th:href="@{/products}" class="category-item">
 
             <div class="category-image">
-                <img src="https://loremflickr.com/300/300/smartwatch?lock=24" alt="Smart Watches">
+                <img th:src="@{/images/smart-watches.jpg}" alt="Smart Watches">
             </div>
 
             <span>Smart Watches</span>
@@ -204,7 +205,7 @@
         <a th:href="@{/products}" class="category-item">
 
             <div class="category-image">
-                <img src="https://loremflickr.com/300/300/classic-watch?lock=25" alt="Classic Watches">
+                <img th:src="@{/images/classic-watches.jpg}" alt="Classic Watches">
             </div>
 
             <span>Classic Collection</span>
@@ -216,7 +217,7 @@
         <a th:href="@{/products}" class="category-item">
 
             <div class="category-image">
-                <img src="https://loremflickr.com/300/300/luxury-watch?lock=26" alt="Limited Edition">
+                <img th:src="@{/images/limited-edition.jpg}" alt="Limited Edition">
             </div>
 
             <span>Limited Edition</span>
